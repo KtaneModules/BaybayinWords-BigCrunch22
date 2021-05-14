@@ -4,19 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using KModkit;
-using Newtonsoft.Json;
 
 public class BaybayinWords : MonoBehaviour
 {
     public KMBombModule Module;
     public KMAudio Audio;
     
-    
     public TextMesh Display;
     public KMSelectable[] Buttons;
     string[] wordsEnglish = new string[] { "Dove", "House", "Food", "Sleep", "Bridge", "Wood", "Sugar", "Rich", "Shoe", "Gold", "Brown", "Treasure", "Weak", "Guava", "Happy", "Thanks", "Captain", "Clap", "Eyes", "Dive", "Plant", "Medicine", "Island", "Hide", "Swim", "Fly", "Lightning", "Dinner", "Breakfast", "Lunch", "Clothing", "Copper", "Silver", "Dead", "Deaf", "Blind", "Lame", "Mute", "Stain", "Plate", "Knife", "Necklace", "Ring", "Stop", "Walk" };
-    string[] wordsBaybayin = new string[] { "ᜃᜎᜉᜆᜒ", "ᜊᜑᜌ᜔", "ᜉᜄ᜔ᜃᜁᜈ᜔", "ᜆᜓᜎ᜔oᜄ᜔", "ᜆᜓᜎᜌ᜔", "ᜃᜑ᜔oᜌ᜔", "ᜀᜐᜓᜃᜎ᜔", "ᜋᜌᜋᜈ᜔", "ᜐᜉᜆ᜔oᜐ᜔", "ᜄᜒᜈ᜔ᜆ᜔o", "ᜃᜌᜓᜋᜅ᜔ᜄᜒ", "ᜃᜌᜋᜈᜈ᜔", "ᜋᜑᜒᜈ", "ᜊᜌᜊᜐ᜔", "ᜋᜐᜌ", "ᜐᜎᜋᜆ᜔", "ᜃᜉᜒᜆᜈ᜔", "ᜉᜎᜃ᜔ᜉᜃ᜔", "ᜋᜆ", "ᜐᜒᜐᜒᜇ᜔", "ᜑᜎᜋᜈ᜔", "ᜄᜋ᜔oᜆ᜔", "ᜁᜐ᜔ᜎ", "ᜆᜄ᜔o", "ᜎᜅ᜔oᜌ᜔", "ᜎᜒᜉᜇ᜔", "ᜃᜒᜇ᜔ᜎᜆ᜔", "ᜑᜉᜓᜈᜈ᜔", "ᜀᜄᜑᜈ᜔", "ᜆᜅ᜔ᜑᜎᜒᜀᜈ᜔", "ᜇᜋᜒᜆ᜔", "ᜆᜈ᜔ᜐ᜔o", "ᜉᜒᜎᜃ᜔", "ᜉᜆᜌ᜔", "ᜊᜒᜈ᜔ᜄᜒ", "ᜊᜓᜎᜄ᜔", "ᜉᜒᜎᜌ᜔", "ᜉᜒᜉᜒ", "ᜋᜈ᜔ᜆ᜔ᜐ", "ᜉ᜔ᜎᜆ᜔o", "ᜃᜓᜆ᜔ᜐᜒᜎ᜔ᜌ᜔o", "ᜃᜓᜏᜒᜈ᜔ᜆᜐ᜔", "ᜐᜒᜅ᜔ᜐᜒᜅ᜔", "ᜑᜒᜈ᜔ᜆ᜔o", "ᜎᜃᜇ᜔" };
+    string[] wordsBaybayin = new string[] { "ᜃᜎᜉᜆᜒ", "ᜊᜑᜌ᜔", "ᜉᜄ᜔ᜃᜁᜈ᜔", "ᜆᜓᜎoᜄ᜔", "ᜆᜓᜎᜌ᜔", "ᜃᜑoᜌ᜔", "ᜀᜐᜓᜃᜎ᜔", "ᜋᜌᜋᜈ᜔", "ᜐᜉᜆoᜐ᜔", "ᜄᜒᜈ᜔ᜆo", "ᜃᜌᜓᜋᜅ᜔ᜄᜒ", "ᜃᜌᜋᜈᜈ᜔", "ᜋᜑᜒᜈ", "ᜊᜌᜊᜐ᜔", "ᜋᜐᜌ", "ᜐᜎᜋᜆ᜔", "ᜃᜉᜒᜆᜈ᜔", "ᜉᜎᜃ᜔ᜉᜃ᜔", "ᜋᜆ", "ᜐᜒᜐᜒᜇ᜔", "ᜑᜎᜋᜈ᜔", "ᜄᜋoᜆ᜔", "ᜁᜐ᜔ᜎ", "ᜆᜄo", "ᜎᜅoᜌ᜔", "ᜎᜒᜉᜇ᜔", "ᜃᜒᜇ᜔ᜎᜆ᜔", "ᜑᜉᜓᜈᜈ᜔", "ᜀᜄᜑᜈ᜔", "ᜆᜅ᜔ᜑᜎᜒᜀᜈ᜔", "ᜇᜋᜒᜆ᜔", "ᜆᜈ᜔ᜐo", "ᜉᜒᜎᜃ᜔", "ᜉᜆᜌ᜔", "ᜊᜒᜈ᜔ᜄᜒ", "ᜊᜓᜎᜄ᜔", "ᜉᜒᜎᜌ᜔", "ᜉᜒᜉᜒ", "ᜋᜈ᜔ᜆ᜔ᜐ", "ᜉ᜔ᜎᜆo", "ᜃᜓᜆ᜔ᜐᜒᜎ᜔ᜌo", "ᜃᜓᜏᜒᜈ᜔ᜆᜐ᜔", "ᜐᜒᜅ᜔ᜐᜒᜅ᜔", "ᜑᜒᜈ᜔ᜆo", "ᜎᜃᜇ᜔" };
     List<string> ModuleWords;
     int correctWordIndex;
     
@@ -55,7 +52,7 @@ public class BaybayinWords : MonoBehaviour
             Buttons[index].AddInteractionPunch();
             if (!solved)
             {
-                Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
+                Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, Buttons[index].transform);
                 Debug.LogFormat("[Baybayin Words #{0}] You pressed the button labeled {1}.", ModuleId, ModuleWords[index].ToLower());
                 if (index == correctWordIndex)
                 {
@@ -82,7 +79,7 @@ public class BaybayinWords : MonoBehaviour
         };
     }
     
-        //twitch plays
+    //twitch plays
     #pragma warning disable 414
     private readonly string TwitchHelpMessage = @"To press a button on the module (in reading order), use the command !{0} press [1-6]";
     #pragma warning restore 414
